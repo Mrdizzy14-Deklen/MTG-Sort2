@@ -1,3 +1,5 @@
+# Handles operations related to cards in collection
+
 import utils
 import hashlib
 
@@ -18,6 +20,10 @@ def add_card(card_in, owner, quantity=1):
     c = conn.cursor()
     card = c.execute('SELECT * FROM card_catalog WHERE name = :name', {"name": card_in}).fetchone()
     pile_num = c.execute('SELECT pile_num FROM users WHERE username = :username', {"username": owner}).fetchone()
+    if not pile_num:
+        print(f"Error: User {owner} not found.")
+        conn.close()
+        return
     pile = pile_index_oracle(card_in, pile_num[0])
     try:
         c.execute('''

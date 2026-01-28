@@ -1,3 +1,5 @@
+# Used to setup tables in the database
+
 import utils
 
 # Setup tables
@@ -22,12 +24,12 @@ def setup_tables():
             cmc INTEGER
         )
     ''')
-    # c.execute('DROP INDEX IF EXISTS card_list')
+
     # Card list
     c.execute('''
         CREATE TABLE IF NOT EXISTS card_list (
             name TEXT,
-            uuid TEXT UNIQUE,
+            uuid TEXT,
             quantity INTEGER DEFAULT 0,
             owner TEXT,
             pile TEXT,
@@ -38,7 +40,7 @@ def setup_tables():
     # User table
     c.execute('''
         CREATE TABLE IF NOT EXISTS users (
-            username TEXT PRIMARY KEY,
+            username TEXT UNIQUE PRIMARY KEY,
             card_code TEXT,
             pile_num INTEGER
         )
